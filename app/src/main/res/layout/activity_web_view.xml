@@ -30,7 +30,6 @@
         android:id="@+id/delimiter"
         app:layout_constraintTop_toBottomOf="@id/back"
         />
-
     <WebView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -49,3 +48,4 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
+
