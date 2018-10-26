@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.laioffer.tinnews.R;
 import com.laioffer.tinnews.common.TinBasicFragment;
+import com.laioffer.tinnews.save.detail.SavedNewsDetailedFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,8 +27,15 @@ public class SavedNewsFragment extends TinBasicFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_saved_news, container, false);
+        View view = inflater.inflate(R.layout.fragment_saved_news, container, false);
+        view.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tinFragmentManager.doFragmentTransaction(SavedNewsDetailedFragment.newInstance());
+            }
+        });
+        return view;
+
     }
 
 }
