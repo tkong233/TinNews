@@ -19,7 +19,10 @@ import android.support.v7.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.laioffer.tinnews.common.TinBasicActivity;
+
 public class WebViewActivity extends TinBasicActivity implements PopupMenu.OnMenuItemClickListener {
+
     public static final String URL = "url";
     private String url;
     private ProgressBar progressBar;
@@ -111,4 +114,8 @@ public class WebViewActivity extends TinBasicActivity implements PopupMenu.OnMen
         return R.layout.activity_web_view;
     }
 
+    @Override
+    public void showSnackBar(String message) {
+
+    }
 }
