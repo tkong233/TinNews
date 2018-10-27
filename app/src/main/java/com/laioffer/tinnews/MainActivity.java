@@ -38,7 +38,6 @@ public class MainActivity extends TinBasicActivity {
         return adapter.getItem(viewPager.getCurrentItem()).getChildFragmentManager();
     }
 
-
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
