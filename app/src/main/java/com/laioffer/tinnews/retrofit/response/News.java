@@ -2,13 +2,17 @@ package com.laioffer.tinnews.retrofit.response;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 public class News {
     public String author;
     @NonNull
     public String title;
     public String description;
     public String url;
+    @SerializedName("urlToImage")  //add serializedAnnotation
     public String image;
+    @SerializedName("publishedAt")  //add serializedAnnotation
     public String time;
 
     public News() {
@@ -38,29 +42,5 @@ public class News {
 
     public String getTime() {
         return time;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setTitle(@NonNull String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 }

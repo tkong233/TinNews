@@ -66,7 +66,6 @@ public class TinNewsCard {
     private void onSwipeIn(){
         Log.d("EVENT", "onSwipedIn");
         onSwipeListener.onLike(news);
-
     }
 
     @SwipeInState
@@ -78,6 +77,7 @@ public class TinNewsCard {
     private void onSwipeOutState(){
         Log.d("EVENT", "onSwipeOutState");
     }
+
     interface OnSwipeListener {
         void onLike(News news);
     }
