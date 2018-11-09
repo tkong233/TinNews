@@ -10,7 +10,6 @@ public class TinPresenter implements TinContract.Presenter {
 
     public TinPresenter() {
         this.model = new TinModel();
-        //link the model with presenter
         this.model.setPresenter(this);
     }
 
