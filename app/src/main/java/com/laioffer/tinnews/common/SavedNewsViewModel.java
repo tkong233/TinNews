@@ -1,71 +1,65 @@
 package com.laioffer.tinnews.save;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laioffer.tinnews.R;
-import com.laioffer.tinnews.common.TinBasicFragment;
-import com.laioffer.tinnews.common.ViewModelAdapter;
-import com.laioffer.tinnews.mvp.MvpFragment;
+import com.laioffer.tinnews.common.BaseViewModel;
+import com.laioffer.tinnews.common.TinFragmentManager;
+import com.laioffer.tinnews.common.Util;
 import com.laioffer.tinnews.retrofit.response.News;
 import com.laioffer.tinnews.save.detail.SavedNewsDetailedFragment;
 
-import java.util.LinkedList;
-import java.util.List;
-/**
- * A simple {@link Fragment} subclass.
- */
-public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> implements SavedNewsContract.View {
+public class SavedNewsViewModel extends BaseViewModel<SavedNewsViewModel.SavedNewsViewHolder> {
 
-    private ViewModelAdapter savedNewsAdapter;
-    private TextView emptyState;
+    private News news;
+    private TinFragmentManager tinFragmentManager;
+    private static int[] ICON_ARRAY = new int[]{R.drawable.a_news_icon, R.drawable.g_news_icon,
+            R.drawable.c_news_icon, R.drawable.y_news_icon, R.drawable.m_news_icon};
 
-    public static SavedNewsFragment newInstance() {
-        Bundle args = new Bundle();
-        SavedNewsFragment fragment = new SavedNewsFragment();
-        fragment.setArguments(args);
-        return fragment;
+    public SavedNewsViewModel(News news, TinFragmentManager tinFragmentManager) {
+        super(R.layout.saved_news_item);
+        this.news = news;
+        this.tinFragmentManager = tinFragmentManager;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_saved_news, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        emptyState = view.findViewById(R.id.empty_state);
-        savedNewsAdapter = new ViewModelAdapter();
-        recyclerView.setAdapter(savedNewsAdapter);
-        return view;
-
+    public SavedNewsViewHolder createItemViewHolder(View view) {
+        return new SavedNewsViewHolder(view);
     }
 
     @Override
-    public SavedNewsContract.Presenter getPresenter() {
-        return new SavedNewsPresenter();
-    }
-
-    @Override
-    public void loadSavedNews(List<News> newsList) {
-        if (newsList.size() == 0) {
-            emptyState.setVisibility(View.VISIBLE);
-        } else {
-            emptyState.setVisibility(View.GONE);
+    public void bindViewHolder(SavedNewsViewHolder holder) {
+        if (!Util.isStringEmpty(news.author)) {
+            holder.author.setText(news.author);
         }
-        if (newsList != null) {
-            List<SavedNewsViewModel> models = new LinkedList<>();
-            for (News news : newsList) {
-                models.add(new SavedNewsViewModel(news, tinFragmentManager));
-            }
-            savedNewsAdapter.addViewModels(models);
+        holder.description.setText(news.getDescription());
+        holder.icon.setImageResource(getDrawable());
+        holder.itemView.setOnClickListener(v -> {
+            tinFragmentManager.doFragmentTransaction(SavedNewsDetailedFragment.newInstance(news));
+        });
+    }
+
+
+    private @DrawableRes
+    int getDrawable() {
+        return ICON_ARRAY[(int)(Math.random() * 5)];
+    }
+
+    public static class SavedNewsViewHolder extends RecyclerView.ViewHolder {
+
+        TextView author;
+        TextView description;
+        ImageView icon;
+
+        public SavedNewsViewHolder(View itemView) {
+            super(itemView);
+            author = itemView.findViewById(R.id.author);
+            description = itemView.findViewById(R.id.description);
+            icon = itemView.findViewById(R.id.image);
         }
     }
 }
