@@ -61,12 +61,10 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
         } else {
             emptyState.setVisibility(View.GONE);
         }
-        if (newsList != null) {
-            List<com.laioffer.tinnews.save.SavedNewsViewModel> models = new LinkedList<>();
-            for (News news : newsList) {
-                models.add(new com.laioffer.tinnews.save.SavedNewsViewModel(news, tinFragmentManager));
-            }
-            savedNewsAdapter.addViewModels(models);
+        List<com.laioffer.tinnews.save.SavedNewsViewModel> models = new LinkedList<>();
+        for (News news : newsList) {
+            models.add(new com.laioffer.tinnews.save.SavedNewsViewModel(news, tinFragmentManager));
         }
+        savedNewsAdapter.addViewModels(models);
     }
 }
